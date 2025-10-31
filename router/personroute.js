@@ -80,5 +80,5 @@ console.log('Internal server error:', err);
     res.status(500).json({ error: 'Internal Server Error' });
     }
 })
-
+//Export person route
 module.exports=route;
