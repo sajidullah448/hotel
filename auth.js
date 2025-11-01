@@ -4,7 +4,7 @@ const person=require('./module/person');
 
 passport.use(new LocalStrategy(async(username,password,done)=>{
   try{
-    console.log("Reduce credential",username,password);
+    // console.log("Reduce credential",username,password);
 const user =await person.findOne({username:username});
 if(!user)
   return done(null,false,{message:'invalid username'});
