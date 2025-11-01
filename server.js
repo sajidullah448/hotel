@@ -7,7 +7,21 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
+const passport=require('./auth');
+
+
+const loghost=(req,res,next)=>{
+  console.log('you go to next function');
+  next();
+}
+app.use(loghost);
+
+
+
+app.use(passport.initialize());
+
+const localauthmiddleware=passport.authenticate('local',{session:false})
+app.get('/',localauthmiddleware,(req, res) => {
   res.send('WELCOME TO HOME PAGE:');
 });
 
@@ -15,10 +29,11 @@ app.get('/', (req, res) => {
 
 //person route============
 const personroute=require('./router/personroute')
-app.use('/person',personroute);
+app.use('/person',localauthmiddleware,personroute);
 
 //menuitem route============
 const menuitemroute=require('./router/menuitemroute');
+const person = require('./module/person');
 app.use('/menuitem',menuitemroute);
 
 
